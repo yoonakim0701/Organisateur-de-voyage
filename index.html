@@ -1,0 +1,338 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="description" content="ODYSSEY - Planificateur universel de voyages pour le monde entier. Gestion interactive du budget par curseurs, cartographie Google Maps au point GPS rouge, suggestions par catégorie d'âge, répertoire de voyages prévus et passés, et studio vlog vidéo en 1 clic.">
+  <title>ODYSSEY · Carnet de Voyage Universel, Planificateur & Studio Vlog</title>
+  
+  <!-- Polices Google Premium : Outfit, Plus Jakarta Sans, Playfair Display, Cinzel, Montserrat & Pacifico -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@500;700;900&family=Montserrat:wght@400;600;700;800&family=Outfit:wght@300;400;500;600;700;800;900&family=Pacifico&family=Playfair+Display:ital,wght@0,500;0,700;1,400&family=Plus+Jakarta+Sans:ital,wght@0,400;0,500;0,600;0,700;1,400&display=swap" rel="stylesheet">
+
+  <!-- Feuilles de style -->
+  <link rel="stylesheet" href="css/style.css">
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🌍</text></svg>">
+</head>
+<body>
+
+  <!-- ======================================================== -->
+  <!-- PORTAIL DE CONNEXION / INSCRIPTION AVEC DÉFILEMENT FILM  -->
+  <!-- ======================================================== -->
+  <div id="modal-auth-portal" class="auth-fullscreen-modal hidden" aria-modal="true" role="dialog">
+    
+    <!-- ARRIÈRE-PLAN : BANDE DE FILM DE PAYSAGES DU MONDE EN DÉFILEMENT CONTINU -->
+    <div class="filmstrip-viewport" aria-hidden="true">
+      <div class="filmstrip-track">
+        <!-- Bande 1 de panoramas du monde -->
+        <div class="film-frame"><img src="assets/images/world_filmstrip_1.jpg" alt="Paysage du monde Bora Bora & Suisse" class="film-img" /></div>
+        <div class="film-frame"><img src="assets/images/world_filmstrip_2.jpg" alt="Paysage du monde Tokyo & Aurores boréales" class="film-img" /></div>
+        <div class="film-frame"><img src="assets/images/world_filmstrip_3.jpg" alt="Paysage du monde Bali & New York" class="film-img" /></div>
+        <div class="film-frame"><img src="assets/images/barcelona_sagrada.jpg" alt="Barcelone Sagrada Familia" class="film-img" /></div>
+        
+        <!-- Duplication pour boucle infinie parfaite -->
+        <div class="film-frame"><img src="assets/images/world_filmstrip_1.jpg" alt="Paysage du monde Bora Bora & Suisse" class="film-img" /></div>
+        <div class="film-frame"><img src="assets/images/world_filmstrip_2.jpg" alt="Paysage du monde Tokyo & Aurores boréales" class="film-img" /></div>
+        <div class="film-frame"><img src="assets/images/world_filmstrip_3.jpg" alt="Paysage du monde Bali & New York" class="film-img" /></div>
+        <div class="film-frame"><img src="assets/images/barcelona_sagrada.jpg" alt="Barcelone Sagrada Familia" class="film-img" /></div>
+      </div>
+      
+      <!-- Voile flouté et perforations cinéma pour garantir une lisibilité absolue -->
+      <div class="filmstrip-blur-overlay"></div>
+      <div class="film-perforations-top"></div>
+      <div class="film-perforations-bottom"></div>
+    </div>
+
+    <!-- CARTE CENTRALE DE CONNEXION / INSCRIPTION -->
+    <div class="auth-card-dialog">
+      <div class="auth-card-header">
+        <div class="auth-brand-badge">🌍 ODYSSEY TRAVEL</div>
+        <h1 class="auth-card-title">Bienvenue dans Votre Espace Voyage</h1>
+        <p class="auth-card-sub">
+          Créez votre profil voyageur pour sauvegarder vos dossiers et débloquer des suggestions personnalisées selon votre âge.
+        </p>
+
+        <!-- Onglets Inscription / Connexion -->
+        <div class="auth-tabs-toggle">
+          <button type="button" class="auth-tab-btn active" id="tab-btn-register">Créer mon Compte</button>
+          <button type="button" class="auth-tab-btn" id="tab-btn-login">Comptes Enregistrés</button>
+        </div>
+      </div>
+
+      <!-- FORMULAIRE DE CRÉATION DE COMPTE (Email, Pseudo, Année de naissance) -->
+      <div class="auth-panel-content" id="auth-panel-register">
+        <form id="form-auth-register">
+          
+          <!-- 1. Adresse Email -->
+          <div class="form-group-auth">
+            <label for="auth-email">Adresse Email :</label>
+            <div class="input-icon-wrap">
+              <span class="icon-input">✉️</span>
+              <input 
+                type="email" 
+                id="auth-email" 
+                placeholder="votre.email@exemple.com" 
+                required 
+                class="input-auth" 
+              />
+            </div>
+          </div>
+
+          <!-- 2. Pseudo -->
+          <div class="form-group-auth">
+            <label for="auth-pseudo">Votre Pseudo de Voyageur :</label>
+            <div class="input-icon-wrap">
+              <span class="icon-input">👤</span>
+              <input 
+                type="text" 
+                id="auth-pseudo" 
+                placeholder="Ex: Alex_GlobeTrotter" 
+                required 
+                class="input-auth" 
+              />
+            </div>
+          </div>
+
+          <!-- 3. Année de Naissance -->
+          <div class="form-group-auth">
+            <label for="auth-birth-year">Année de Naissance :</label>
+            <div class="input-icon-wrap">
+              <span class="icon-input">🎂</span>
+              <input 
+                type="number" 
+                id="auth-birth-year" 
+                placeholder="Ex: 2003 (Jeune), 1988 (Adulte), 1962 (Senior)" 
+                min="1905" 
+                max="2009" 
+                required 
+                class="input-auth" 
+              />
+            </div>
+            
+            <!-- Rétroaction dynamique calculant l'âge et la catégorie en temps réel -->
+            <div id="auth-age-feedback" class="age-feedback-badge hidden">
+              <!-- Injecté par auth.js -->
+            </div>
+          </div>
+
+          <!-- Guide des 3 Catégories d'Âge -->
+          <div class="age-categories-explainer">
+            <span class="explainer-title">3 Catégories de Voyageurs :</span>
+            <div class="categories-mini-chips">
+              <span class="cat-chip jeune">🎒 Jeune : 18 à 28 ans</span>
+              <span class="cat-chip adulte">🧭 Adulte : 29 à 50 ans</span>
+              <span class="cat-chip senior">👑 Senior : 51 à 120 ans</span>
+            </div>
+          </div>
+
+          <button type="submit" class="btn-auth-submit">
+            <span>✨ Créer mon Compte & Entrer</span>
+          </button>
+        </form>
+
+        <!-- Raccourcis de test rapide pour évaluer instantanément les 3 âges -->
+        <div class="auth-demo-shortcuts">
+          <span class="demo-tag">⚡ Tester directement en 1 clic :</span>
+          <div class="demo-buttons-row">
+            <button type="button" class="btn-demo-pill jeune" onclick="AuthManager.loginDemoUser('user_lea_jeune')">
+              🎒 Léa (23 ans · Jeune)
+            </button>
+            <button type="button" class="btn-demo-pill adulte" onclick="AuthManager.loginDemoUser('user_thomas_adulte')">
+              🧭 Thomas (38 ans · Adulte)
+            </button>
+            <button type="button" class="btn-demo-pill senior" onclick="AuthManager.loginDemoUser('user_helene_senior')">
+              👑 Hélène (64 ans · Senior)
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- PANNEAU DES COMPTES DÉJÀ ENREGISTRÉS -->
+      <div class="auth-panel-content hidden" id="auth-panel-login">
+        <p class="login-intro-text">Sélectionnez un profil enregistré pour reprendre votre session :</p>
+        <div id="auth-accounts-list">
+          <!-- Injecté par auth.js -->
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- BARRE SUPÉRIEURE : STATUT DU PROFIL & AMBIANCE MONDE     -->
+  <!-- ======================================================== -->
+  <div class="top-announcement-bar">
+    <div class="topbar-content container">
+      <div class="topbar-left">
+        <span class="flag-icon">🌍</span>
+        <span class="topbar-tag">ODYSSEY MONDE</span>
+        <span class="topbar-divider">·</span>
+        <span class="topbar-route-summary">Planificateur Universel de Voyages · Tous Continents & Horizons</span>
+      </div>
+
+      <div class="topbar-right">
+        <div id="header-user-status-pill">
+          <!-- Statut de l'utilisateur connecté injecté par app.js -->
+        </div>
+        <button id="btn-toggle-theme" class="theme-toggle-btn" title="Changer d'ambiance jour/nuit">🌙 Mode Sombre</button>
+        <button id="btn-reset-odyssey-data" class="theme-toggle-btn btn-reset-tiny" title="Réinitialiser aux valeurs de démonstration">🔄 Reset</button>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======================================================== -->
+  <!-- EN-TÊTE PRINCIPAL AVEC LOGO & BANDE DE NAVIGATION DU SITE -->
+  <!-- ======================================================== -->
+  <header class="main-site-header sticky-header">
+    <div class="header-inner container">
+      
+      <!-- Logo et Identité -->
+      <a href="#home" class="brand-logo" id="brand-logo-link">
+        <div class="logo-emblem">🌍</div>
+        <div class="brand-text">
+          <span class="brand-title">ODYSSEY <span class="year-highlight">TRAVEL</span></span>
+          <span class="brand-sub">Carnet & Planificateur Universel de Voyages</span>
+        </div>
+      </a>
+
+      <!-- ====================================================== -->
+      <!-- BANDE QUI RENVOIE AUX PAGES DU SITE                    -->
+      <!-- ====================================================== -->
+      <nav class="main-site-navigation-bar" aria-label="Navigation principale">
+        
+        <!-- Page Accueil -->
+        <button class="nav-tab-item active" data-tab="home" id="nav-btn-home">
+          <span class="tab-icon">🏠</span>
+          <span class="tab-label">Accueil & Suggestions</span>
+        </button>
+
+        <!-- Page 1 : Créer un Nouveau Dossier -->
+        <button class="nav-tab-item" data-tab="create-trip" id="nav-btn-create-trip">
+          <span class="tab-icon">➕</span>
+          <span class="tab-label">Créer un Voyage</span>
+        </button>
+
+        <!-- Page 2 : Répertoire des Voyages -->
+        <button class="nav-tab-item" data-tab="repertoire" id="nav-btn-repertoire">
+          <span class="tab-icon">📁</span>
+          <span class="tab-label">Répertoire des Voyages</span>
+        </button>
+
+        <!-- Page 3 : Photos & Studio Vlog -->
+        <button class="nav-tab-item nav-tab-highlight" data-tab="photos-vlog" id="nav-btn-photos-vlog">
+          <span class="tab-icon">🎬</span>
+          <span class="tab-label">Photos & Studio Vlog</span>
+        </button>
+
+      </nav>
+
+    </div>
+  </header>
+
+  <!-- ======================================================== -->
+  <!-- CONTENU PRINCIPAL DES DIFFÉRENTES PAGES DU SITE          -->
+  <!-- ======================================================== -->
+  <main class="app-main-content">
+
+    <!-- ====================================================== -->
+    <!-- PAGE D'ACCUEIL : SESSION UTILISATEUR & SUGGESTIONS PAR ÂGE -->
+    <!-- ====================================================== -->
+    <section id="tab-home" class="app-page-section active">
+      
+      <!-- Grand Banner Hero d'Accueil Mondial -->
+      <div class="hero-home-banner">
+        <img src="assets/images/world_filmstrip_1.jpg" alt="Odyssey - Le monde à portée de main" class="hero-banner-image" />
+        <div class="hero-banner-overlay">
+          <div class="container hero-banner-content">
+            <span class="hero-badge">🌐 Explorez la Planète sans Limites</span>
+            <h1 class="hero-main-title">Votre Carnet Universel pour Tous Vos Voyages</h1>
+            <p class="hero-lead-text">
+              Créez vos dossiers personnalisés, équilibrez votre budget avec des curseurs intelligents, 
+              localisez vos étapes sur Google Maps au repère GPS rouge, et compilez vos souvenirs en un clic dans notre studio vlog.
+            </p>
+          </div>
+        </div>
+      </div>
+
+      <div class="container page-content-container">
+        
+        <!-- CARTE DE SESSION UTILISATEUR POUR SAUVEGARDER LA SESSION -->
+        <div class="user-session-wrapper" id="home-user-session-card">
+          <!-- Injecté dynamiquement par app.js -->
+        </div>
+
+        <!-- SÉPARATEUR DE SECTION -->
+        <div class="site-section-divider"></div>
+
+        <!-- ==================================================== -->
+        <!-- EN DESSOUS DE LA BANDE : SUGGESTIONS DE VOYAGE       -->
+        <!-- STRICTEMENT FILTRÉES SELON LA CATÉGORIE D'ÂGE        -->
+        <!-- ==================================================== -->
+        <section class="home-age-suggestions-block" id="home-suggestions-container">
+          <!-- Injecté dynamiquement par app.js selon que l'utilisateur est Jeune, Adulte ou Senior -->
+        </section>
+
+      </div>
+    </section>
+
+    <!-- ====================================================== -->
+    <!-- PAGE 1 : CRÉER UN NOUVEAU DOSSIER (UN DOSSIER = UN VOYAGE) -->
+    <!-- ====================================================== -->
+    <section id="tab-create-trip" class="app-page-section hidden">
+      <div class="container page-content-container">
+        <!-- Injecté par trip-creator.js -->
+      </div>
+    </section>
+
+    <!-- ====================================================== -->
+    <!-- PAGE 2 : LE RÉPERTOIRE DES VOYAGES (DOSSIERS CRÉÉS)     -->
+    <!-- (En premier les voyages prévus, en bas les voyages passés) -->
+    <!-- ====================================================== -->
+    <section id="tab-repertoire" class="app-page-section hidden">
+      <div class="container page-content-container">
+        <!-- Injecté par repertoire.js -->
+      </div>
+    </section>
+
+    <!-- ====================================================== -->
+    <!-- PAGE 3 : PHOTOS & VIDÉOS RANGÉES PAR VOYAGE & STUDIO VLOG -->
+    <!-- ====================================================== -->
+    <section id="tab-photos-vlog" class="app-page-section hidden">
+      <div class="container page-content-container">
+        <!-- Injecté par photos.js -->
+      </div>
+    </section>
+
+  </main>
+
+  <!-- ======================================================== -->
+  <!-- PIED DE PAGE DU SITE                                     -->
+  <!-- ======================================================== -->
+  <footer class="main-site-footer">
+    <div class="container footer-inner">
+      <div class="footer-left">
+        <strong>ODYSSEY TRAVEL</strong> · Carnet de Route Universel, Gestion de Budget par Curseurs & Studio Vlog Vidéo.
+      </div>
+      <div class="footer-center">
+        <span>Prêt pour l'aventure · Du jeune baroudeur au voyageur senior</span>
+      </div>
+      <div class="footer-right">
+        <span>🌍 Conçu pour explorer la Terre entière</span>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ======================================================== -->
+  <!-- SCRIPTS JAVASCRIPT MODULAIRES DE L'APPLICATION           -->
+  <!-- ======================================================== -->
+  <script src="js/data.js"></script>
+  <script src="js/auth.js"></script>
+  <script src="js/trip-creator.js"></script>
+  <script src="js/repertoire.js"></script>
+  <script src="js/photos.js"></script>
+  <script src="js/vlog.js"></script>
+  <script src="js/app.js"></script>
+
+</body>
+</html>
